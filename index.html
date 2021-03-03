@@ -1,41 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+<title>Pick Your Clothes</title>
 <head>
+    <link rel = stylesheet TYPE = "text/css" href = "style.css">
+    <script src = "chat.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pick Your Clothes</title>
 </head>
+
 <body>
     <!-- header -->
-    <header>
-        <!-- header 부탁드립니다! -->
+    <header class="header">
+        <img src="icon/"
     </header>
-    <script>
-        function setbtn(value) {
-            const element = document.getElementById('user');
-            element.innerText = value;
-            } 
-    </script>
     <!-- conversation -->
     <article id="convBox">
         <section id="conversation">
             <div align="left">
-                <img src="C:/Users/LG/Desktop/sook_sinsa/frontend/icon/logo sqr.png" alt="My Image">
+                <img src="icon/profile_pyc.png" alt="My Image">
                 <p>
                     pyc speak
                 </p>
             </div>
             <div align="right">
-                <img src="C:/Users/LG/Desktop/sook_sinsa/frontend/icon/user.png" alt="My Image">
+                <img src="icon/profile_user.png" alt="My Image">
                 <div id="user">
                     user speak
                 </div>
             </div>
-            
+
             <!-- 이 부분에 말풍선 부탁드립니다! -->
         </section>
-        <section id="sinario" align="center">
+        <section id="scenario" align="center">
             <button type="button" id="button1" value="다음에 올게요" onclick="setbtn(value)">다음에 올게요</button>
             <button type="button" id="button2" value="시작하기" onclick="setbtn(value)">시작하기</button>
             <button type="button" id="button2" value="버튼" onclick="setbtn(value)">버튼</button>
@@ -50,8 +47,8 @@
         </section>
     </article>
 
-    <footer align="center">
-        Copyright ⓒ PYC. All rights reserved.
+    <footer class="footer">
+        <div>Copyright ⓒ PYC. All rights reserved.</div>
     </footer>
 </body>
 </html>
