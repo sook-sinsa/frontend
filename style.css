@@ -1,91 +1,62 @@
-body {
-    padding-top: 125px;
-    background: #F9F2ED;
+body { width: 100%; height: 1024px; background: #F9F2ED; font-family: Forum; font-weight: 400; font-style: normal;}
+
+/* header */
+.header > .center { width: 100%; height: 125px; background: #F9F2ED; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);}
+.header > .center > img {width: 249px; height: 70px; padding-top: 27px; display: block; margin: auto; }
+
+/* conversation */
+article > #convBox > #conversation {height: 700px;}
+article > #convBox > #conversation > #left { float: left; width: 50%; margin-left: 5%;}
+article > #convBox > #conversation > #left > * {float: left;}
+article > #convBox > #conversation > #left > .conv {
+    font-family: Forum; font-style: normal; font-weight: normal; font-size: 29px;
+    line-height: 32px; align-items: center;
+    color: #454545; padding: 23px;
+
+    background: #F9D5D3; border: 3px dashed #ECA4A6; box-sizing: border-box;
+    border-radius: 20px;
 }
 
-.header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 125px;
-    background: #F9F2ED;
-    text-align: center;
+article > #convBox > #conversation > #right { float: right; width: 50%; margin-right: 5%; align-items: flex-end; }
+article > #convBox > #conversation > #right > * {float: right;}
+article > #convBox > #conversation > #right > .conv {
+    font-family: Forum; font-style: normal; font-weight: normal; font-size: 29px;
+    line-height: 32px; align-items: center; text-align: center;
+    color: #454545; padding: 23px;
+
+    background: #D7DBD1; border: 3px dashed #99A89E; box-sizing: border-box;
+    border-radius: 20px;
+}
+article > #convBox > #scenario { width: 100%; display:flex; height: 100px; justify-content: center; align-items: center;}
+article > #convBox > #scenario > button { 
+    width: 177px; height: 69px;
+    background: #E6E8E4; border: 1px dashed #807F89; box-sizing: border-box;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: Forum; font-size: 27px; line-height: 30px;
+    text-align: center; color: #454545;
 }
 
-.footer {
-    position: fixed;
-    text-align: center;
-    bottom: 0px;
-    height: 30px;
-    width: 100%;
-    background: #F9F2ED;
-    color: black;
-}
+article > #convBox > #scenario > * {margin: 0 75px;}
 
-.scroll {
-    padding-left: 16px;
-    padding-right: 16px;
-    overflow-y: : scroll;
-    -ms-overflow-style: none;
-}
+/*
+.circle > * { border-radius:75px; margin-top: 30px; margin-bottom: -10px;}
+*/
 
-div.center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+/* Input Text */
+article > section > .sendbox { width: 100%; background: #C4C4C4; display: flex; justify-content: center; align-items: center;}
+article > section > .sendbox > * {float: left; height: 65px; margin: 17px; }
+article > section > .sendbox > button { 
+    background-color: transparent;
+    background-repeat: no-repeat; 
+    background-position: 0px 0px; 
+    border: none;          
+    cursor: pointer; 
 }
+article > section > .sendbox > input{ width: 1140px;}
 
-div.profile {
-    width: 99px;
-    height: 99px;
-    border-radius: 70%;
-    overflow: hidden;
-}
+/* footer */
+footer { background: #C4C4C4; color:#807F89; text-align: center;}
 
-img.profile {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
 
-div.sendbox {
-    display: flex;
-    position: fixed;
-    bottom: 30px;
-    height: 97px;
-    width: 100%;
-    background: #C4C4C4;
-}
 
-div#sendbox-left {
-    flex: 1;
-    padding: 16px;
-}
-
-div#sendbox-center {
-    flex: 10;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    text-align: center;
-}
-
-div#sendbox-right {
-    flex: 1;
-    padding: 16px;
-    text-align: right;
-}
-
-button {
-    border: 0;
-}
-
-textarea {
-    width: 100%;
-    height: 65px;
-    border: 0;
-    background: #F4F2F2;
-}
