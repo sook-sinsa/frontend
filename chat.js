@@ -45,6 +45,51 @@ function modal(id) {
     });
 }
 
+function openImageFile(){
+    var input=document.createElement("input");
+
+    input.type="file";
+    input.accept="image/*";
+
+    input.click();
+    input.onchange=function(event){
+        var input = event.target;
+
+        var reader = new FileReader();
+        reader.onload = function(event){
+            processFile(event.target.files[0]);
+        };
+        reader.readAsDataURL(input.files[0]);
+    };
+}
+
+function resizeImage(file){
+
+}
+
+function processFile(file){
+    var filesToUpload = document.getElementByld('imageFile').files;
+    var file = filesToUpload[0];
+    
+    var img=document.createElement("img");
+    var reader=new FileReader();
+
+    reader.onload=function(e){
+        img.src = e.target.result;
+        var width=img.width;
+        var height = img.height;
+
+        width = 125;
+        height = 12;
+    }
+
+//    reader.readAsText(file,"UTF-8");
+    
+//    reader.onload=function(){
+//        output.innerText=reader.result;
+//    }
+}
+
 // Element 에 style 한번에 오브젝트로 설정하는 함수 추가
 Element.prototype.setStyle = function(styles) {
     for (var k in styles) this.style[k] = styles[k];
