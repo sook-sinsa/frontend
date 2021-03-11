@@ -3,8 +3,8 @@
 <title>Pick Your Clothes</title>
 <head>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script type="text/javascript" src = "main.js"></script>
-    <link rel = stylesheet TYPE = "text/css" href = "main.css">
+    <script type="text/javascript" src = "../static/js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href ="{{url_for('static', filename='../static/css/main.css')}}"/>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,7 +39,7 @@
                     </p>
                 </li>
             </ul>
-            <button class="btn" onclick="location.href='./chat.html'" > Go To Chat </button>
+	    <button class="btn" onclick="location.href='http://203.252.195.236:5000/chat'"> Go To Chat </button>
         </div>
     </article>
     <footer class="footer">
