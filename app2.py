@@ -6,8 +6,14 @@ app.config['SECRET_KEY'] = '비밀번호 설정'
 socketio = SocketIO(app)
 
 @app.route("/")
+def index():
+    return render_template('index.html')
+
+    
+@app.route("/chat")
 def sessions():
     return render_template('chat2.html')
+    
 
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
