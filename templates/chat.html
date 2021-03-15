@@ -3,7 +3,7 @@
 <title>Pick Your Clothes</title>
 <head>
 	<link rel = stylesheet TYPE = "text/css" href ="{{url_for('static', filename='../static/css/style.css')}}"/>
-    <script type="text/javascript" src = "../static/js/local_chat.js"></script>
+    <script type="text/javascript" src = "../static/js/chat.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,19 +26,24 @@
                     <!--<div class="circle"><img src="./icon/profile_pyc.png" alt="pyc_chat" width="99px" height="99px"></div>-->
                     <p class="conv">
                         안녕하세요 숙명여자대학교 옷잘코 팀 챗봇입니다.
-                        저희는 원하는 옷과 비슷한 스타일을 추천해주는 기능을 
+                        저희는 원하는 옷과 비슷한 스타일을 추천해주는 기능을
                         제공하고 있어요 😆
                         대화를 시작하시려면 ‘대화 시작하기'를 눌러주세요
-                        저희는 원하는 옷과 비슷한 스타일을 추천해주는 기능을 
+                        저희는 원하는 옷과 비슷한 스타일을 추천해주는 기능을
                         제공하고 있어요 😆
                         대화를 시작하시려면 ‘대화 시작하기'를 눌러주세요
                     </p>
                 </div>
                 <div id="right">
                     <!--<div class="circle"><img src="./icon/profile_user.png" alt="user_chat" width="99px" height="99px"></div>-->
-                    <p class="conv">
-                        대화 시작하기
-                    </p>
+		    <p class="conv">
+		    	대화 시작하기
+		    </p>
+		    <div id="picture">
+			<img id="clothes">
+			<video id="video" width="125" height="125" autoplay></video>
+        		<canvas id="canvas" width="125" height="125"></canvas>
+		    </div>
                 </div>
             </div>
             <div id="scenario" >
@@ -49,7 +54,7 @@
             </div>
         </div>
     </article>
-    
+
     <!-- Input Text -->
     <article id="sendbox">
         <section>
@@ -59,16 +64,18 @@
                 <input id="message" type="text">
                 <button type="submit" id="send"><img src="../static/icon/send.png" onmouseover="this.src='../static/icon/send_clicked.png'" onmouseout="this.src='../static/icon/send.png'" width="110px" height="65px"></button>
             </div>
-
-            <div id="my_modal">
-                <button id="upb" type="button" onclick="canfunc()" ><img id="upi" src="../static/icon/camera2.png" style="width:200px; height:200px;" alt=""></button>
-		
-                <button id="underb" type="button" onclick="openImageFile()"><img id="uni" src="../static/icon/gall2.png" style="width:200px; height:200px;" alt=""></button>
-                <a class="modal_close_btn">closed</a>
-            </div>
         </section>
     </article>
+		<article>
+				<div id="my_modal">
+						<button id="upb" type="button" onclick="openCamera()" ><img id="upi" src="../static/icon/camera2.png" style="width:200px; height:200px;" alt=""></button>
 
+						<!--<label for="gallery" onclick="if(navigator.appVersion.indexOf('MSIE') != -1){check3.click()}"><img id="uni" src="../static/icon/gall2.png" style="width:200px; height:200px;" alt=""></label>
+<input id="gallery" type="file" onchange="openImageFile(event)'>
+-->
+						<a class="modal_close_btn">closed</a>
+				</div>
+		</article>
     <footer class="footer">
         <div>Copyright ⓒ PYC. All rights reserved.</div>
     </footer>

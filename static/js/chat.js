@@ -45,31 +45,21 @@ function modal(id) {
     });
 }
 
-function openImageFile(){
-    var input=document.createElement("input");
-
-    input.type="file";
-    input.accept="image/*";
-
-    input.click();
-    input.onchange=function(event){
-        var input = event.target;
-
-        var reader = new FileReader();
-        reader.onload = function(event){
-            processFile(event.target.files[0]);
-        };
-        reader.readAsDataURL(input.files[0]);
-    };
-	
-	___(input.files[0])
+function openImageFile(file) {
+    var input = file.target;
+    var reader = new FileReader();
+    reader.onload = function() {
+	var dataURL = reader.result;
+	var output = document.getElementById('clothes');
+	output.src = dataURL;
+	output.width = 125;
+	output.height = 125;
+	};
+    photo = input.files[0];
+    reader.readAsDataURL(input.files[0]);
 }
 
-function resizeImage(file){
-
-}
-
-function camfunc(){
+function openCamera(){
     if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
 	navigator.mediaDevices.getUserMedia({video:true}).then(function(stream){
 	    var video = document.getElementById('video');
@@ -80,9 +70,11 @@ function camfunc(){
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
     var video = document.getElementById('video');
-    document.getElementById("captureBtn").addEventListener("click",function(){
-	context.drawImage(video,0,0,125,125);
-    });
+    window.addEventListener("keydown", (e) => {
+        if (e.code == "Enter") {
+            context.drawImage(video,0,0,125,125)
+        }  
+    })
 }
 
 function processFile(file){

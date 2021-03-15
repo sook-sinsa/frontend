@@ -6,11 +6,24 @@ app.config['SECRET_KEY'] = '비밀번호 설정'
 socketio = SocketIO(app)
 
 @app.route("/")
+def index():
+    return render_template('index.html')
+
+    
+@app.route("/chat")
 def sessions():
     return render_template('chat2.html')
+    
 
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
+
+@app.route("/predict", methods=['POST'])
+def predict():
+    val = request.form['test']
+    if val == '사진':
+        val = val + '을 받았습니다'
+    return(val)
 
 @socketio.on('my event')
 def handle_my_custom_event(json, methods=['GET', 'POST']):

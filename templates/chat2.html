@@ -3,6 +3,10 @@
   <head>
     <title>Pick Your Clothes</title>
     <link rel = stylesheet TYPE = "text/css" href ="{{url_for('static', filename='../static/css/style2.css')}}"/>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.0/socket.io.min.js"></script>
+    <script type="text/javascript" src = "../static/js/chat2.js"></script>
   </head>
   <body>
     <!-- header -->
@@ -18,49 +22,12 @@
     </div>
     
 
-    <form action="" method="GET">
-      <input type="text" class="message" placeholder="Messages"/>
+    <form action="/predict" method="POST">
+      <input type="text" class="message" name="test" placeholder="Messages"/>
       <input type="submit"/>
     </form>
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.0/socket.io.min.js"></script>
-    <script type="text/javascript">
-      var socket = io.connect('http://203.252.195.236:5000');
-
-      socket.on( 'connect', function() {
-        socket.emit( 'my event', {
-          data: 'User Connected'
-        } )
-        $( 'div.message_holder' ).append( '<div class="msgbox" style="background: #D7DBD1; border: 3px dashed #99A89E; text-align: left"><b style="color: #000">SYSTEM</b> '+'시작을입력하세요'+'</div>' )
-        var form = $( 'form' ).on( 'submit', function( e ) {
-          e.preventDefault()
-          let user_input = $( 'input.message' ).val()
-          socket.emit( 'my event', {
-            user_name : 'user',
-            message : user_input
-          } )
-          $( 'input.message' ).val( '' ).focus()
-        } )
-      } )
-      socket.on( 'my response', function( msg ) {
-        console.log( msg )
-        if( typeof msg.user_name !== 'undefined' ) {
-          $( 'div.message_holder' ).append( '<div class="msgbox">'+msg.message+'</div>' )
-          if(msg.message == '시작'){
-            $( 'div.message_holder' ).append( '<div class="msgbox" style="background: #D7DBD1; border: 3px dashed #99A89E; text-align: left"><b style="color: #000">SYSTEM</b> '+'시스템메시지입니다'+'</div>' )
-          } 
-        }
-        const $messageTextBox = $('#convBox'); 
-        $messageTextBox.scrollTop($messageTextBox[0].scrollHeight - 130);
-      })
-
     
-      
 
-
-    </script>
-
-  </body> </html>
+  </body>
+  </html>
