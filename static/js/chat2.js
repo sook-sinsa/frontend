@@ -39,7 +39,7 @@
           }
         }
         const $messageTextBox = $('#convBox'); 
-        $messageTextBox.scrollTop($messageTextBox[0].scrollHeight - 130);
+        $messageTextBox.scrollTop($messageTextBox[0].scrollHeight);
       })
 
       function endChat(){
