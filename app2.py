@@ -18,6 +18,13 @@ def sessions():
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
 
+@app.route("/predict", methods=['POST'])
+def predict():
+    val = request.form['test']
+    if val == '사진':
+        val = val + '을 받았습니다'
+    return(val)
+
 @socketio.on('my event')
 def handle_my_custom_event(json, methods=['GET', 'POST']):
     print('received my event: ' + str(json))
