@@ -6,19 +6,19 @@
 
 @font-face{
     font-family: Exo;
-    src: url(../font/Exo/Exo-VariableFont_wght.ttf)
+    src: url(../font/옛날사진관/a옛날사진관3.ttf)
 }
 
 @font-face{
     font-family: Forum;
-    src: url(../font/Forum/Forum-Regular.ttf);
+    src: url(../font/옛날사진관/a옛날사진관2.ttf);
 }
 
 /* header */
 header > .main { height: 960px; background-color:#99A89E; 
     display: flex; align-items: center;}
 .nonfixed {
-    width: 100%; height: 200px;
+    width: 100%; height: 100px;
     font-family: FrankRuhlLibreBold; font-style: normal; font-size: 100px;
     line-height: 129px; text-align: center; color: #F9F2ED; 
 }
@@ -28,19 +28,26 @@ header > .main { height: 960px; background-color:#99A89E;
 }
 
 /* article */
-article{ height: 870px; background-color: #ECE1DA; position: relative; margin-top: -20px;}
+article { height: 870px; background-color: #ECE1DA; position: relative; margin-top: -20px;line-height: 30px;}
 article > .floating {padding:3% 5%;}
-article > .floating { font-family: Forum; color: #454545;}
-article > .floating > ul > li { margin-bottom: 5%;}
+article > .floating { font-family: Forum; color: #454545; }
+article > .floating > ul > li { margin-bottom: 5%; }
 article > .floating > button { 
     background: #ECE1DA; border: 3px solid #99A89E; 
     width: 480px; margin: auto; padding: 0 120px; height: 100px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    font-family: Exo; font-size: 45px; line-height: 66px;
-    display: flex; align-items: center; 
+    font-family: Exo; font-size: 40px; line-height: 66px;
+    display: flex; align-items: center; text-align: center;
     color: #99A89E; cursor: pointer;
     
 }
+
+table {
+  border-spacing: 20px;
+  border-collapse: separate;
+}
+img { width: 150px; height: 150px; border-radius: 30px; }
+
 .btn:hover{
     background:#99A89E ; border: 3px solid #99A89E; color: #ECE1DA;
 }
