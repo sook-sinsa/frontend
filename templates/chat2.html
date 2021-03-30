@@ -2,32 +2,37 @@
   <html lang="en">
   <head>
     <title>Pick Your Clothes</title>
-    <link rel = stylesheet TYPE = "text/css" href ="{{url_for('static', filename='../static/css/style2.css')}}"/>
+    <link rel = stylesheet TYPE = "text/css" href ="../static/css/style2.css"/>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.0/socket.io.min.js"></script>
-    <script type="text/javascript" src = "../static/js/chat2.js"></script>
+    <script type="text/javascript" src = "../static/js/chat.js"></script>
   </head>
   <body>
     <!-- header -->
     <header class="header">
         <div class="center">
-		<img src="../static/icon/logo.png" width="249px" height="70px" alt="Logo">
+            <img src="../static/icon/logo.png" width="249px" height="70px" alt="Logo">
         </div>
     </header>
 
     <!-- conversation -->
-    <div id="convBox">
+    <div id="conversation">
         <div class="message_holder"></div>
     </div>
-    
 
-    <form action="/predict" method="POST">
-      <input type="text" class="message" name="test" placeholder="Messages"/>
-      <input type="submit"/>
+
+    <form method="post" enctype="multipart/form-data" id="uploadForm">
+      <label for="gallery"><img src="../static/icon/gallery.png" onmouseover="this.src='../static/icon/gallery_clicked.png'" onmouseout="this.src='../static/icon/gallery.png'" width="110px" height="65px"></label>
+      <input id="gallery" type="file" accept="image/*"  name="test" onclick="isClicked()"  style="display: none;"/>
+      <!--<button type="button" id="camera"><img src="../static/icon/camera.png" onmouseover="this.src='../static/icon/camera_clicked.png'" onmouseout="this.src='../static/icon/camera.png'" width="110px" height="65px" onclick="openCamera()"></button>-->
+      <input id="message" type="text" placeholder="텍스트를 입력하십시오..." multiple/>
+      <button type="submit" id="send" onclick="readURL(document.querySelector('input'))"><img src="../static/icon/send.png" onmouseover="this.src='../static/icon/send_clicked.png'" onmouseout="this.src='../static/icon/send.png'" width="110px" height="65px"></button>
     </form>
 
-    
+    <footer class="footer">
+      <div>Copyright ⓒ PYC. All rights reserved.</div>
+    </footer>
 
   </body>
   </html>
