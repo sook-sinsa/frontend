@@ -17,7 +17,7 @@
 body { width: 100%; height: 1024px; background: #F9F2ED; font-family: Forum; font-weight: 400; font-style: normal;}
 
 /* header */
-.header > .center { width: 100%; height: 125px; background: #F9F2ED; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);}
+.header > .center { position: fixed; width: 100%; height: 125px; background: #F9F2ED; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); }
 .header > .center > img {width: 249px; height: 70px; padding-top: 27px; display: block; margin: auto; }
 
 /* conversation */
@@ -45,7 +45,7 @@ article > #convBox > #conversation > #right > .conv {
 }
 
 article > #convBox > #scenario { width: 100%; display:flex; height: 100px; justify-content: center; align-items: center;}
-article > #convBox > #scenario > button { 
+article > #convBox > #scenario > button {
     width: 177px; height: 69px;
     background: #E6E8E4; border: 1px dashed #807F89; box-sizing: border-box;
     border-radius: 20px;
@@ -56,24 +56,22 @@ article > #convBox > #scenario > button {
 article > #convBox > #scenario > button:hover{background-color: #a9b9ae;}
 article > #convBox > #scenario > * {margin: 0 75px;}
 
-/*
-.circle > * { border-radius:75px; margin-top: 30px; margin-bottom: -10px;}
-*/
 
 /* Input Text */
-article > section > .sendbox { width: 100%; background: #C4C4C4; display: flex; justify-content: center; align-items: center;}
-article > section > .sendbox > * {float: left; height: 65px; margin: 17px; }
-article > section > .sendbox > button { 
+article > section > .sendbox { position: fixed; width: 100%; bottom: 18px; background: #C4C4C4; display: flex; justify-content: center; align-items: center;}
+article > section > .sendbox > * {float: left; height: 65px; margin: 16px; }
+article > section > .sendbox > button {
     background-color: transparent;
-    background-repeat: no-repeat; 
-    background-position: 0px 0px; 
-    border: none;          
-    cursor: pointer; 
+    background-repeat: no-repeat;
+    background-position: 0px 0px;
+    border: none;
+    cursor: pointer;
 }
-article > section > .sendbox > input{ width: 1140px;}
+article > section > .sendbox button { width: 80px; height: 45px; }
+article > section > .sendbox > input{ width: 100%; }
 
 /* footer */
-footer { background: #C4C4C4; color:#807F89; text-align: center;}
+footer { position: fixed; background: #C4C4C4; color:#807F89; align-items: center; bottom: 0px;}
 
 
 #my_modal {
@@ -89,5 +87,3 @@ footer { background: #C4C4C4; color:#807F89; text-align: center;}
     color: #C4C4C4; font-weight: bold;
     cursor: pointer;
 }
-
-
