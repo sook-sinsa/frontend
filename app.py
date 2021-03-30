@@ -1,4 +1,5 @@
 import time
+import sys
 import PIL.Image
 import PIL.ImageOps
 
@@ -12,11 +13,18 @@ import openpyxl
 
 from tensorflow.keras.models import load_model
 import json
-from flask import Flask, request, render_template
-import urllib.request
 
-import crawling
+from flask import Flask, request, render_template, json
+from flask_socketio import SocketIO
+import urllib.request
+from werkzeug.utils import secure_filename
+
+import dbModule
+
+import clothesProfileCrawl
+import weatherCrawl
 from bs4 import BeautifulSoup
+
 
 colors_dict = {
 "0048BA":"Absolute Zero","B0BF1A":"Acid green","7CB9E8":"Aero","C9FFE5":"Aer o blue","B284BE":"African violet","72A0C1":"Air superiority blue","EDEAE0":"Alabaster","F0F8FF":"Alice blue","C46210":"Alloy orange","EFDECD":"Almond","E52B50":"Amaranth","9F2B68":"Amaranth (M&P)","F19CBB":"Amaranth pink","AB274F":"Amaranth purple","D3212D":"Amaranth red","3B7A57":"Amazon","FFBF00":"Amber","FF7E00":"Amber (SAE/ECE)","9966CC":"Amethyst","A4C639":"Android green","CD9575":"Antique brass","665D1E":"Antique bronze","915C83":"Antique fuchsia","841B2D":"Antique ruby","FAEBD7":"Antique white","008000":"Ao (English)",
@@ -62,8 +70,8 @@ def modify_request(req):
     data = np.ndarray(shape=(1, 125, 125, 3), dtype=np.float32)
 
     # request 내 이미지 크기 125X125 로 조정
-    urllib.request.urlretrieve(req, 'img')
-    image = PIL.Image.open('img').convert('RGB')
+    # urllib.request.urlretrieve(req, 'img')
+    image = PIL.Image.open(req).convert('RGB')
     size = (125, 125)
     image = image.resize(size)
     # image = PIL.ImageOps.fit(image, size, Image.ANTIALIAS)
@@ -198,74 +206,8 @@ def pants_length(x_test):
     prediction = model.predict(x_test)
     return getCatName(classNames, prediction)
 
-
-def lsleeve(x_test):
-    classNames = ['sleeve', 'haveCollar', 'padding']
-    model = load_model('model_lsleeve.h5')
-    prediction = model.predict(x_test)
-    return getCatName(classNames, prediction)
-
-
-def give_recommendation(col, cat):
-    wb = openpyxl.load_workbook("imageLink.xlsx")  # category, color, url
-    sheet = wb.active
-    df = pd.DataFrame(sheet.values)
-    df.columns = ["bigIdx", "smallIdx", "itemIdx", "category", "color", "url"]
-    wb.close()
-
-    products = df[(df['color'] == col) & (df['category'] == cat) & (df['url'] != 'NA')].values.tolist()
-    recommendList = []
-
-    wb = openpyxl.load_workbook("datasheet.xlsx")   # brandName, productName, price, url
-    sheet = wb.active
-    list = pd.DataFrame(sheet.values).values.tolist()
-    wb.close()
-
-    for product in products:
-        for l in list:
-            if product[5] == l[6]:
-                recommendList.append(l)
-
-    if len(recommendList) > 3:
-        recommendList = random.sample(recommendList, 3)
-
-    items = []
-    # imgUrlList = crawling.request_crawling(recommendList)
-
-    for r in range(len(recommendList)):
-        item = {
-            "description": recommendList[r][4],
-            "price": recommendList[r][5],
-            "currency": "원",
-            "thumbnails": [
-                {
-                    "imageUrl": "https://image.msscdn.net/images/goods_img/20200424/1421368/1421368_2_500.jpg",
-                    "link": {
-                        "web": recommendList[r][6]
-                    }
-                }
-            ],
-            "profile": {
-                "nickname": recommendList[r][3]
-            },
-            "buttons": [
-                {
-                    "action": "webLink",
-                    "label": "상품 구경하기",
-                    "webLinkUrl": recommendList[r][6]
-                },
-                {
-                    "action": "share",
-                    "label": "공유하기"
-                }
-            ]
-        }
-        items.append(item)
-
-    return items
-
-
 app = Flask(__name__)
+socketio = SocketIO(app)
 
 @app.route("/")
 def index():
@@ -273,69 +215,75 @@ def index():
 
 @app.route("/chat")
 def chat():
-    return render_template('chat.html')
+    return render_template('chat2.html')
 
-@app.route("/predict", methods=["POST"])
+
+def messageReceived(methods=['GET', 'POST']):
+    print('message was received!!!')
+
+
+@app.route("/predict", methods=['POST'])
 def predict():
-    req = flask.request.get_json()
-    req = req['userRequest']['utterance']
+    f = request.files.get('fileObj')
+    req = f.filename
     print(req)
     if 'jpg' in req or 'jpeg' in req or 'png' in req or 'JPG' in req or 'JPEG' in req or 'PNG' in req or 'HEIC' in req:
-        image, data = modify_request(req)
+        image, data = modify_request(f)
 
         # 이미지 색상 검출
         w, h = get_wh(image)
-        pixel = pixel_list(image,w,h)
+        pixel = pixel_list(image, w, h)
         getPixel = n_most_common(pixel)
         print(getPixel)
         colorName = detect_color(getPixel[0], getPixel[1], getPixel[2])
         print(colorName)
 
         # 카테고리 예측
-        # categoryName = detect_category(data)
-        categoryName = lsleeve(data)
-        # time.sleep(20)
-        print("예측 카테고리는 "+categoryName)
+        categoryName = detect_category(data)
+        # categoryName = lsleeve(data)
+        print("예측 카테고리는 " + categoryName)
 
-        # 상품 추천
-        recommendList = give_recommendation(colorName, categoryName)
-
-        res = {
-            "version": "2.0",
-            "template": {
-                "outputs": [
-                    {
-                        "simpleText": {
-                            "text": "찾으시는 상품은 "+colorName+" 색상 "+categoryName+" 입니다."
-                        }
-                    },
-                    {
-                        "carousel": {
-                            "type": "commerceCard",
-                            "items": recommendList
-                        }
-                    }
-                ]
-            }
+        return {
+            "color": colorName,
+            "category": categoryName
         }
 
     else:
-        res = {
-            "version": "2.0",
-            "template": {
-                "outputs": [
-                    {
-                        "simpleText": {
-                            "text": "사진을 보내주세요!"
-                        }
-                    }
-                ]
-            }
-        }
-    return flask.jsonify(res)
+        return {"value": "bad"}
 
-if __name__ == "__main__":
-    print("** Loading Keras Model and Flask Starting Server... ** ")
-    print("** Please wait until server has fully started **")
-    app.run(host='0.0.0.0', debug=True)
-    
+
+@app.route("/recommendation", methods=['POST'])
+def recommendation():
+    category = request.form['category']
+    color = request.form['color']
+
+    db = dbModule.Database()
+    sql = "SELECT url, brand, price, name \
+            FROM pyc.Clothes \
+            WHERE category=%s AND color=%s"
+    rows = db.executeAll(sql, (category, color))
+    if (len(rows) > 3):
+        rows = random.sample(rows, 3)
+
+    items = []
+    for i in range(len(rows)):
+        item = {
+            "url": rows[i]["url"],
+            "profile": clothesProfileCrawl.clothesProfileCrawl(rows[i]["url"]),
+            "brand": rows[i]["brand"],
+            "price": rows[i]["price"],
+            "name": rows[i]["name"]
+        }
+        items.append(item)
+
+    return json.dumps(items)
+
+
+@socketio.on('my event')
+def handle_my_custom_event(json, methods=['GET', 'POST']):
+    print('received my event: ' + str(json))
+    socketio.emit('my response', json, callback=messageReceived)
+
+
+if __name__ == '__main__':
+    socketio.run(app, host='0.0.0.0', debug=True)
