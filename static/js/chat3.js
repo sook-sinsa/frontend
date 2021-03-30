@@ -61,17 +61,21 @@
             endChat();
           }
 
-          else if((isNaN(price)==true)&& decide==4){//msg.message=30000부분에 DB에 없다면 으로 고쳐야함.
+          else if((isNaN(parseINT(msg.message))==False)&& decide==4){//DB에 없으면
             // 30000원짜리가 없다고 가정
             $( 'div.message_holder' ).append( '<div class="msgbox" style="background: #D7DBD1; border: 3px dashed #99A89E; text-align: left"><b style="color: #000">SYSTEM</b> '+'죄송하지만 현재 '+price+'가격대의 color category 상품이 존재하지 않습니다<br>추가로 다른 기능을 사용하시겠습니까? y/n'+'</div>')
             decide = 5
           }
-          else if((isNaN(price)==true) && decide==4){
-            // 20000원짜리가 있다고 가정
+          else if((isNaN(parseINT(msg.message))==False)&&decide==4){
+            // DB에 있다는 가정하에
             $( 'div.message_holder' ).append( '<div class="msgbox" style="background: #D7DBD1; border: 3px dashed #99A89E; text-align: left"><b style="color: #000">SYSTEM</b> '+'색상 : color<br>종류 : category'+'</div>' )
             $( 'div.message_holder' ).append( '<div class="msgbox" style="background: #D7DBD1; border: 3px dashed #99A89E; text-align: left"><b style="color: #000">SYSTEM</b> '+'추천1<br><a target="_blank" href="http://www.google.com">go to page</a>'+'</div>' )
             $( 'div.message_holder' ).append( '<div class="msgbox" style="background: #D7DBD1; border: 3px dashed #99A89E; text-align: left"><b style="color: #000">SYSTEM</b> '+'결과만족 y/n'+'</div>' )
             decide = 2
+          }
+          else if((isNaN(parseINT(msg.message))==True)&& decide==4){// 숫자가 아닌 값을 넣으면
+            $( 'div.message_holder' ).append( '<div class="msgbox" style="background: #D7DBD1; border: 3px dashed #99A89E; text-align: left"><b style="color: #000">SYSTEM</b> '+'정수로 입력해주세요.'+'</div>')
+            decide = 4
           }
 
           // else if(msg.message =='y' && decide==4){
