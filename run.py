@@ -1,19 +1,14 @@
 from flask import Flask, render_template, request, json
 from flask_socketio import SocketIO
 
-import sys
-import time
 import PIL.Image
 import PIL.ImageOps
 
 import random
 import numpy as np
-import pandas as pd
 
-from tensorflow.keras.models import load_model
 import json
 from flask import Flask, request, render_template
-import urllib.request
 
 from modules import dbModule
 from modules import crawlClothesProfile
